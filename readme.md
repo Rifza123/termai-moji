@@ -94,16 +94,6 @@ emojis.parse(document.querySelector("#chat"));
 
 ---
 
-## 🎨 Sumber Emoji
-
-Gambar emoji iOS yang digunakan dalam preset `ios` berasal dari repositori:
-
-> 🎨 [lautis/emojie-iphone](https://github.com/lautis/emojie-iphone)
-
-Emoji-emoji tersebut didistribusikan sesuai lisensi masing-masing dan merupakan milik pemegang hak cipta.
-
----
-
 ## 📄 Lisensi
 
 Dilisensikan di bawah [MIT License](./LICENSE) — gratis digunakan, dimodifikasi, dan disebarluaskan, dengan mencantumkan atribusi yang sesuai.
@@ -113,4 +103,3 @@ Dilisensikan di bawah [MIT License](./LICENSE) — gratis digunakan, dimodifikas
 ## 🙏 Kredit
 
 - 👨‍💻 Developer: [Rifza123](https://github.com/Rifza123)
-- 🎨 Emoji iOS oleh: [Lautis](https://github.com/lautis)
