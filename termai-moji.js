@@ -17,7 +17,6 @@ function TermaiMoji() {
 		},
 
 		init(base = "https://c.termai.cc/emojis/ios/") {
-			// Ambil semua teks dari dokumen
 			const text = document.body.innerText;
 			const found = text.match(emojiRegex) || [];
 
