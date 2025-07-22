@@ -53,6 +53,15 @@ Tambahkan langsung ke dalam halaman HTML kamu via CDN:
 
 ## 📘 API
 
+--- 
+### `CDN Url`
+Sudah mendukung emoji whatsapp dan ios
+
+- `IOS` → https://c.termai.cc/emojis/ios/
+- `WhatsApp` → https://c.termai.cc/emojis/whatsapp/
+
+---
+
 ### `TermaiMoji()`
 
 Membuat instance baru dari library emoji.
@@ -64,7 +73,7 @@ Membuat instance baru dari library emoji.
 Mendaftarkan emoji manual.
 
 - `emoji` → string emoji Unicode (contoh: `"💯"`)
-- `src` → URL atau path gambar (PNG/SVG)
+- `src` → URL atau path gambar (PNG)
 
 ```js
 emojis.register("👽", { src: "https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/main/emojis/ios/alien.png" });
@@ -93,6 +102,7 @@ emojis.parse(document.querySelector("#chat"));
 ```
 
 ---
+
 
 ## 📄 Lisensi
 
