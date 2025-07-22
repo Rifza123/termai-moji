@@ -14,22 +14,15 @@ function TermaiMoji() {
       emojiMap[emoji] = src;
     },
     
-    init(base = "https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/main/emojis/ios/") {
-      const emojiSet = new Set();
-      const treeWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    init(base = "https://c.termai.cc/emojis/ios/") {
+      const text = document.body.innerText;
+      const found = text.match(emojiRegex) || [];
 
-      while (treeWalker.nextNode()) {
-        const text = treeWalker.currentNode.nodeValue;
-        const emojiRegex = /\p{Extended_Pictographic}/gu;
-        let match;
-        while ((match = emojiRegex.exec(text)) !== null) {
-          emojiSet.add(match[0]);
+      found.forEach((emoji) => {
+        if (!(emoji in emojiMap)) {
+          const fileName = toEmojiFileName(emoji);
+          this.register(emoji, { src: base + fileName });
         }
-      }
-
-      emojiSet.forEach((emoji) => {
-        const fileName = toEmojiFileName(emoji);
-        this.register(emoji, { src: base + fileName });
       });
     },
     
