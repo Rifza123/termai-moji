@@ -11,7 +11,7 @@ Dirancang dengan fleksibilitas penuh: kamu dapat menggunakan preset emoji siap p
 ## ✨ Fitur
 
 - 🖼️ Mengganti emoji teks menjadi gambar PNG/SVG.
-- ⚙️ API sederhana: `.register()`, `.use()`, dan `.init()`.
+- ⚙️ API sederhana: `.register()`, `.init()`, dan `.parse()`,.
 - 🔐 Aman dari XSS (berbasis DOM Walker, bukan `innerHTML`).
 - 🌐 Dukungan CDN siap pakai.
 - 🎨 Preset emoji seperti `ios`, dengan rencana dukungan untuk set lain di masa depan.
@@ -35,7 +35,7 @@ Tambahkan langsung ke dalam halaman HTML kamu via CDN:
 
 <script>
   const emojis = TermaiMoji();
-  emojis.use("ios");
+  emojis.init("https://c.termai.cc/emojis/ios/");
 
   // Ukuran default (1em)
   emojis.parse(document.getElementById("chat"));
@@ -67,7 +67,7 @@ Mendaftarkan emoji manual.
 - `src` → URL atau path gambar (PNG/SVG)
 
 ```js
-emojis.register("👽", { src: "https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/master/emojis/ios/alien.png" });
+emojis.register("👽", { src: "https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/main/emojis/ios/alien.png" });
 ```
 
 ---
@@ -79,7 +79,7 @@ Mendaftarkan emoji secara massal
 - `basePath` → URL folder emoji (default: `emojis/ios/` jika tidak ditentukan)
 
 ```js
-emojis.init("https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/master/emojis/ios/");
+emojis.init("https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/main/emojis/ios/");
 ```
 
 ---
