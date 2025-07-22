@@ -1,70 +1,101 @@
 function TermaiMoji() {
-  const emojiMap = {};
+	const emojiMap = {};
+	const emojiRegex = /\p{Emoji_Presentation}|\p{Extended_Pictographic}/gu;
 
-  function toEmojiFileName(emoji) {
-    const codePoints = [];
-    for (const char of [...emoji]) {
-      codePoints.push(char.codePointAt(0).toString(16));
-    }
-    return 'emoji_'+ 'u' + codePoints.join('_') + '.png';
-  }
-  
-  return {
-    register(emoji, { src }) {
-      emojiMap[emoji] = src;
-    },
-    
-    init(base = "https://c.termai.cc/emojis/ios/") {
-      const text = document.body.innerText;
-      const found = text.match(emojiRegex) || [];
+	function toEmojiFileName(emoji) {
+		const codePoints = Array.from(emoji).map((c) =>
+			c.codePointAt(0).toString(16)
+		);
+		return "emoji_u" + codePoints.join("_") + ".png";
+	}
 
-      found.forEach((emoji) => {
-        if (!(emoji in emojiMap)) {
-          const fileName = toEmojiFileName(emoji);
-          this.register(emoji, { src: base + fileName });
-        }
-      });
-    },
-    
-    parse(element, options = {}) {
-      if (!element) return;
+	return {
+		register(emoji, {
+			src
+		}) {
+			emojiMap[emoji] = src;
+		},
 
-      const walk = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
-      const nodes = [];
+		init(base = "https://c.termai.cc/emojis/ios/") {
+			// Ambil semua teks dari dokumen
+			const text = document.body.innerText;
+			const found = text.match(emojiRegex) || [];
 
-      const size = options.size || "1em"; 
+			found.forEach((emoji) => {
+				if (!(emoji in emojiMap)) {
+					const fileName = toEmojiFileName(emoji);
+					this.register(emoji, {
+						src: base + fileName
+					});
+				}
+			});
+		},
 
-      while (walk.nextNode()) {
-        nodes.push(walk.currentNode);
-      }
+		parse(element, options = {}) {
+			if (!element) return;
 
-      nodes.forEach((textNode) => {
-        const parent = textNode.parentNode;
-        const fragments = document.createDocumentFragment();
-        let text = textNode.nodeValue;
+			const walk = document.createTreeWalker(
+				element,
+				NodeFilter.SHOW_TEXT,
+				null,
+				false
+			);
+			const nodes = [];
+			const size = options.size || "1em";
 
-        Object.keys(emojiMap).forEach((emoji) => {
-          const parts = text.split(emoji);
-          if (parts.length > 1) {
-            for (let i = 0; i < parts.length; i++) {
-              fragments.appendChild(document.createTextNode(parts[i]));
-              if (i < parts.length - 1) {
-                const img = document.createElement('img');
-                img.style.width = size;
-                img.style.height = size;
-                img.style.verticalAlign = "text-bottom"; img.style.display = "inline-block";
-                img.style.objectFit = "contain"; 
-                img.style.margin = "0"; 
-                img.style.padding = "0";
-                img.style.lineHeight = "1";
-                img.style.maxHeight = "1em";
-              }
-            }
-            parent.replaceChild(fragments, textNode);
-            text = "";
-          }
-        });
-      });
-    }
-  }
+			while (walk.nextNode()) {
+				nodes.push(walk.currentNode);
+			}
+
+			nodes.forEach((textNode) => {
+				const parent = textNode.parentNode;
+				const text = textNode.nodeValue;
+
+				let matched = false;
+				const fragments = document.createDocumentFragment();
+
+				let lastIndex = 0;
+				for (let i = 0; i < text.length;) {
+					const char = text[i];
+					const codePoint = text.codePointAt(i);
+					const emoji = String.fromCodePoint(codePoint);
+					const emojiLength = emoji.length;
+
+					if (emojiMap[emoji]) {
+						if (i > lastIndex) {
+							fragments.appendChild(
+								document.createTextNode(text.slice(lastIndex, i))
+							);
+						}
+
+						const img = document.createElement("img");
+						img.src = emojiMap[emoji];
+						img.alt = emoji;
+						img.style.width = size;
+						img.style.height = size;
+						img.style.verticalAlign = "text-bottom";
+						img.style.display = "inline-block";
+						img.style.objectFit = "contain";
+						img.style.maxHeight = "1em";
+
+						fragments.appendChild(img);
+						matched = true;
+						i += emojiLength;
+						lastIndex = i;
+					} else {
+						i += emoji.length;
+					}
+				}
+
+				if (matched) {
+					if (lastIndex < text.length) {
+						fragments.appendChild(
+							document.createTextNode(text.slice(lastIndex))
+						);
+					}
+					parent.replaceChild(fragments, textNode);
+				}
+			});
+		},
+	};
 }
