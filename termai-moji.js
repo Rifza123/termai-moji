@@ -40,7 +40,6 @@ function TermaiMoji() {
 				false
 			);
 			const nodes = [];
-			const size = options.size || "1em";
 
 			while (walk.nextNode()) {
 				nodes.push(walk.currentNode);
@@ -70,13 +69,14 @@ function TermaiMoji() {
 						const img = document.createElement("img");
 						img.src = emojiMap[emoji];
 						img.alt = emoji;
-						img.style.width = size;
-						img.style.height = size;
-						img.style.verticalAlign = "text-bottom";
-						img.style.display = "inline-block";
-						img.style.objectFit = "contain";
-						img.style.maxHeight = "10em";
-
+						img.style.width = options.width || "1em";;
+						img.style.height = options.height || "1em";;
+						img.style.verticalAlign = options.verticalAlign || "middle";
+						img.style.display = options.display || "inline";
+						img.style.objectFit = options.objectFit || "contain";
+						img.style.maxHeight = options.maxHeight || "10em";
+						img.style.marginRight = "2px"
+						
 						fragments.appendChild(img);
 						matched = true;
 						i += emojiLength;
