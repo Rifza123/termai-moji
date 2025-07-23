@@ -93,7 +93,7 @@ emojis.init("https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/m
 
 ---
 
-### `.parse(element)`
+### `.parse(element, { width: "45px", height: "45px",display: "inline", verticalAlign: "middle", marginRight: "2px" })`
 
 Memindai teks dalam elemen DOM dan mengganti emoji dengan gambar.
 
