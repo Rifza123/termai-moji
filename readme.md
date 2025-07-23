@@ -41,10 +41,10 @@ Tambahkan langsung ke dalam halaman HTML kamu via CDN:
   emojis.parse(document.getElementById("chat"));
 
   // Ukuran custom (24px)
-  emojis.parse(document.getElementById("chat"), { size: "24px" });
+  emojis.parse(document.getElementById("chat"), { width: "24px", height: "24px",display: "inline", verticalAlign: "middle", marginRight: "2px"  });
 
   // Ukuran besar menggunakan em
-  emojis.parse(document.getElementById("chat"), { size: "2em" });
+  emojis.parse(document.getElementById("chat"), { width: "2em", height: "2em",display: "inline", verticalAlign: "middle", marginRight: "2px"  });
 </script>
 
 ```
