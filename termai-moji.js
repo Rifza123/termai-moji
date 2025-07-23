@@ -75,7 +75,7 @@ function TermaiMoji() {
 						img.style.verticalAlign = "text-bottom";
 						img.style.display = "inline-block";
 						img.style.objectFit = "contain";
-						img.style.maxHeight = "1em";
+						img.style.maxHeight = "10em";
 
 						fragments.appendChild(img);
 						matched = true;
