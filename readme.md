@@ -76,7 +76,7 @@ Mendaftarkan emoji manual.
 - `src` → URL atau path gambar (PNG)
 
 ```js
-emojis.register("👽", { src: "https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/main/emojis/ios/alien.png" });
+emojis.register("👽", { src: "https://c.termai.cc/emojis/ios/alien.png" });
 ```
 
 ---
@@ -88,7 +88,7 @@ Mendaftarkan emoji secara massal
 - `basePath` → URL folder emoji (default: `emojis/ios/` jika tidak ditentukan)
 
 ```js
-emojis.init("https://raw.githubusercontent.com/Rifza123/termai-moji/refs/heads/main/emojis/ios/");
+emojis.init("https://c.termai.cc/emojis/ios/");
 ```
 
 ---
