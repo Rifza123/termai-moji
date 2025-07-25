@@ -10,9 +10,7 @@ function TermaiMoji() {
     }
 
     return {
-        register(emoji, {
-            src
-        }) {
+        register(emoji, { src }) {
             emojiMap[emoji] = src;
         },
 
@@ -32,22 +30,6 @@ function TermaiMoji() {
 
         parse(element, options = {}) {
             if (!element) return;
-
-         
-            let emojiWidth, emojiHeight;
-            
-            if (options.width && options.height) {
-                emojiWidth = options.width;
-                emojiHeight = options.height;
-            } else if (options.size) {
-                emojiWidth = emojiHeight = options.size;
-            } else {
-              
-                const computedStyle = window.getComputedStyle(element);
-                const fontSize = parseInt(computedStyle.fontSize);
-                const autoSize = Math.floor(fontSize * 0.95) + "px"; 
-                emojiWidth = emojiHeight = autoSize;
-            }
 
             const walk = document.createTreeWalker(
                 element,
@@ -70,7 +52,6 @@ function TermaiMoji() {
 
                 let lastIndex = 0;
                 for (let i = 0; i < text.length;) {
-                    const char = text[i];
                     const codePoint = text.codePointAt(i);
                     const emoji = String.fromCodePoint(codePoint);
                     const emojiLength = emoji.length;
@@ -85,12 +66,26 @@ function TermaiMoji() {
                         const img = document.createElement("img");
                         img.src = emojiMap[emoji];
                         img.alt = emoji;
-                        img.style.width = emojiWidth;
-                        img.style.height = emojiHeight;
+
+                        let width, height;
+                        if (options.width && options.height) {
+                            width = options.width;
+                            height = options.height;
+                        } else if (options.size) {
+                            width = height = options.size;
+                        } else {
+                            const computed = window.getComputedStyle(parent);
+                            const fontSize = parseFloat(computed.fontSize) || 16;
+                            const autoSize = Math.floor(fontSize * 0.95) + "px";
+                            width = height = autoSize;
+                        }
+
+                        img.style.width = width;
+                        img.style.height = height;
                         img.style.verticalAlign = options.verticalAlign || "text-bottom";
                         img.style.display = options.display || "inline-block";
                         img.style.objectFit = "contain";
-                      
+
                         if (options.marginRight) img.style.marginRight = options.marginRight;
                         if (options.marginLeft) img.style.marginLeft = options.marginLeft;
 
